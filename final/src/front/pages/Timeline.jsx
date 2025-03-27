@@ -9,25 +9,35 @@ const initialTasks = [
     { id: 3, title: "Testing", start: "2025-03-30", end: "2025-04-20", status: "Waiting", color: "bg-yellow-200" },
 ];
 
-// List of colors for new tasks
 const colors = ["bg-red-200", "bg-purple-200", "bg-orange-200", "bg-teal-200", "bg-pink-200"];
 
 export default function TimelineCalendar() {
     const [tasks, setTasks] = useState(initialTasks);
     const [selectedTask, setSelectedTask] = useState(null);
+    const [showCalendar, setShowCalendar] = useState(false); // Controls Calendar visibility
+    const [newTaskDate, setNewTaskDate] = useState(new Date());
 
-    // Function to add a new task with a different color
+    // Function to handle adding a task with calendar
     const handleAddTask = () => {
+        setShowCalendar(true); // Show calendar when add task is clicked
+    };
+
+    // Function to confirm adding task after selecting a date
+    const handleDateSelection = (date) => {
+        const formattedDate = date.toISOString().split("T")[0];
+
         const newTask = {
             id: tasks.length + 1,
             title: "New Task",
-            start: new Date().toISOString().split("T")[0], // Default to today
-            end: new Date().toISOString().split("T")[0],
+            start: formattedDate,
+            end: formattedDate,
             status: "Waiting",
-            color: colors[tasks.length % colors.length], // Assign different color
+            color: colors[tasks.length % colors.length],
         };
+
         setTasks([...tasks, newTask]);
         setSelectedTask(newTask);
+        setShowCalendar(false); // Hide calendar after adding task
     };
 
     // Function to delete selected task
@@ -38,22 +48,16 @@ export default function TimelineCalendar() {
         }
     };
 
-    // Handle date change for selected task
-    const handleDateChange = (newDate) => {
-        if (selectedTask) {
-            const formattedDate = newDate.toISOString().split("T")[0];
-            handleTaskEdit(selectedTask.id, "start", formattedDate);
-        }
-    };
-
     // Handle task field edits
     const handleTaskEdit = (id, field, value) => {
-        const updatedTasks = tasks.map(task =>
-            task.id === id ? { ...task, [field]: value } : task
+        setTasks((prevTasks) =>
+            prevTasks.map(task =>
+                task.id === id ? { ...task, [field]: value } : task
+            )
         );
-        setTasks(updatedTasks);
+
         if (selectedTask && selectedTask.id === id) {
-            setSelectedTask({ ...selectedTask, [field]: value });
+            setSelectedTask(prevTask => ({ ...prevTask, [field]: value }));
         }
     };
 
@@ -66,7 +70,7 @@ export default function TimelineCalendar() {
                 {tasks.map((task) => (
                     <div
                         key={task.id}
-                        className={`task-card ${task.color}`} // ✅ Corrected syntax
+                        className={`task-card ${task.color}`}
                         onClick={() => setSelectedTask(task)}
                     >
                         <p className="task-title">{task.title}</p>
@@ -78,9 +82,17 @@ export default function TimelineCalendar() {
 
             {/* Add & Delete Task Buttons */}
             <div className="task-buttons">
-                <button className="add-task-btn" onClick={handleAddTask}>➕ Add Task</button>
-                <button className="delete-task-btn" onClick={handleDeleteTask} disabled={!selectedTask}>➖ Delete Task</button>
+                <button type="button" className="add-task-btn" onClick={handleAddTask}>➕ Add Task</button>
+                <button type="button" className="delete-task-btn" onClick={handleDeleteTask} disabled={!selectedTask}>➖ Delete Task</button>
             </div>
+
+            {/* Calendar for Adding a Task */}
+            {showCalendar && (
+                <div className="calendar-popup">
+                    <h2>Select Date for New Task</h2>
+                    <Calendar onChange={handleDateSelection} value={newTaskDate} />
+                </div>
+            )}
 
             {/* Task Edit Section */}
             {selectedTask && (
@@ -115,7 +127,7 @@ export default function TimelineCalendar() {
                     {/* Start Date Calendar */}
                     <div className="editor-field">
                         <label className="editor-label">Start Date:</label>
-                        <Calendar onChange={handleDateChange} value={new Date(selectedTask.start)} />
+                        <Calendar onChange={(date) => handleTaskEdit(selectedTask.id, "start", date.toISOString().split("T")[0])} value={new Date(selectedTask.start)} />
                     </div>
                 </div>
             )}

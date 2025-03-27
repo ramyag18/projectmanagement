@@ -5,11 +5,8 @@ import "./Team.css";
 const Team = () => {
   return (
     <div className="team-container">
-      {/* Navbar */}
-      <nav className="team-navbar">
-        <div>Project Management Dashboard</div>
-        <Link to="/" className="home-link">Home</Link>
-      </nav>
+      
+      
 
       {/* Team Section - Aligned to Right */}
       <div className="team-layout">
@@ -22,6 +19,7 @@ const Team = () => {
               </div>
               <h3>Sanjeetha G</h3>
               <p>727723EUEC176</p>
+              < a href="">Contact</a>
             </div>
             <div className="team-card card-green">
               <div className="profile-box">
@@ -29,6 +27,7 @@ const Team = () => {
               </div>
               <h3>Ramya G</h3>
               <p>727723EUEC154</p>
+              < a href="">Contact</a>
             </div>
             <div className="team-card card-red">
               <div className="profile-box">
@@ -36,15 +35,13 @@ const Team = () => {
               </div>
               <h3>Rakshidha R</h3>
               <p>727723EUEC150</p>
+              < a href="">Contact</a>
             </div>
           </div>
         </div>
       </div>
 
-      {/* Footer */}
-      <footer className="team-footer">
-        © 2025 Project Management Dashboard. All rights reserved.
-      </footer>
+      
     </div>
   );
 };

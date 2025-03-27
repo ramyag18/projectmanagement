@@ -24,7 +24,13 @@ const Navbar = ({ onTaskClick, onHomeClick }) => {
           <Link to="/timeline" onClick={onTaskClick}>Task Tracking</Link>
         </li>
         <li>
-          <Link to="/team">Team</Link>
+          <Link to="/team">Contact</Link>
+        </li>
+        <li>
+          <Link to="/signup">Sign Up</Link>
+        </li>
+        <li>
+          <Link to="/login">Login</Link>
         </li>
       </ul>
     </nav>

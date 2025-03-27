@@ -1,11 +1,11 @@
 .importance-container {
   text-align: center;
   padding: 30px;
-  background: linear-gradient(135deg, #ff9a9e, #fad0c4);
+  background: linear-gradient(135deg, #7fccd6aa, #2ca2a09a);
   border-radius: 12px;
-  margin: 20px;
+  margin: 20px auto;
   box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
-  
+  max-width: 1200px;
 }
 
 .importance-title {
@@ -20,14 +20,17 @@
   display: flex;
   flex-wrap: wrap;
   justify-content: center;
+  align-items: center;
   gap: 20px;
+  max-width: 900px;
+  margin: 0 auto;
 }
 
 .importance-box {
   background: #fff;
   padding: 20px;
   border-radius: 10px;
-  width: 250px;
+  width: 300px; /* Slightly increased for better balance */
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
   transition: transform 0.3s ease, box-shadow 0.3s ease;
 }
@@ -38,7 +41,7 @@
 }
 
 .importance-box h3 {
-  color: #ff4d4d;
+  color: #e84393; /* Soft pink-red */
   font-size: 20px;
   margin-bottom: 10px;
 }
